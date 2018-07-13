@@ -50,10 +50,11 @@ public class update extends HttpServlet {
 		    String n = request.getParameter("user");
 		    String a = request.getParameter("age");
 		    String i = request.getParameter("id");
+		    String p = request.getParameter("password");
 		    
 		   
 		    try {
-				f=Entities.kindExample_writesEntity(n,a,i);
+				f=Entities.kindExample_writesEntity(n,a,i,p);
 				 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

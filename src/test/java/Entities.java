@@ -1,14 +1,26 @@
 
 
+
 import static org.junit.Assert.fail;
+
+import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.CompositeFilter;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 
+@SuppressWarnings("unused")
 public class Entities {
 	
 	
@@ -16,11 +28,20 @@ public class Entities {
 	private static DatastoreService datastore;
 	public static Key key;
 	static Entity e3 = null;
-	 public static boolean kindExample_writesEntity(String n,String a,String i) throws Exception {
+	static String uname = null;
+	static String password = null;
+	
+	//datastore = DatastoreServiceFactory.getDatastoreService();
+	
+	
+	
+	 public static boolean kindExample_writesEntity(String n,String a,String i,String p) throws Exception {
 		    // [START kind_example]
 		    Entity employee = new Entity("Employee", i);
+		    employee.setProperty("Pin", p);
 		    employee.setProperty("Name", n);
 		    employee.setProperty("Age", a);
+		    
 		    //employee.setProperty("lastName", "Salieri");
 		    //employee.setProperty("hireDate", new Date());
 		    //employee.setProperty("attendedHrTraining", true);
@@ -57,12 +78,56 @@ public class Entities {
 		}
 	  }*/
 	  
+	@SuppressWarnings("deprecation")
+	public static boolean login_user(String u , String p)throws NullPointerException {
+		
+		
+		
+		String user = u;
+		String password = p;//global variable
+		//Entity e = new Entity("Employee");
+		System.out.println("User inside function :"+user+"Password is :"+password);
+		/*Filter newFilter = new FilterPredicate("Name", FilterOperator.EQUAL, user);
+		Query q =  new Query("Employee").setFilter(newFilter);
+		PreparedQuery pq = datastore.prepare(q);
+		Entity storedUser = pq.asSingleEntity();
+		
+		System.out.println(storedUser);
+		String storedPassword = (String) storedUser.getProperty("Pin");*/
+		
+		datastore = DatastoreServiceFactory.getDatastoreService();
+		 Query q = new Query("Employee").addFilter("Name", FilterOperator.EQUAL,user);
+		    PreparedQuery pq = datastore.prepare(q);
+		    
+		    for(Entity ei : pq.asIterable()) {
+		    	String username = ei.getProperty("Name").toString();
+		    	int Age = Integer.valueOf((String) (ei.getProperty("Age")));
+		    	password = (String) ei.getProperty("Pin");
+		    	System.out.println("The username is "+username+"Age :"+Age+"Password "+password);
+		    	
+		    }
+		    
+		if (p.equals(password)) { 
+		  //correct password
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		
+		
+		
+	}
 	
 
 	public static  void delete(String i) throws Exception   {
 		 System.out.println("To be deleted id is :"+i);
 		  
 		Key  k = KeyFactory.createKey("Employee",i);
+		
+		datastore = DatastoreServiceFactory.getDatastoreService();
 		   
 		 //Entity e3= datastore.get(k);
 		 System.out.println(k);
@@ -77,7 +142,8 @@ public class Entities {
 	//retrieve a record
 
 	public static Entity retrieve(String i) {
-		
+	
+		datastore = DatastoreServiceFactory.getDatastoreService();
 		Key k = KeyFactory.createKey("Employee", i);
 		try {
 			 e3 = datastore.get(k);
@@ -96,6 +162,8 @@ public class Entities {
 		return e3;
 		
 	}
+	
+	
 		
 	  }
 
