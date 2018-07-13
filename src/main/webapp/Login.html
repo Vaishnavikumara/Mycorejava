@@ -2,17 +2,40 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>LOG_IN</title>
 </head>
-<body>
-<h1>Welcome,this is Login page</h1>
-
-
-
-   <form action = '/hello' method='Post'><table align='center'><tr><td> Name </td><td><input name='user' type ='text' ></td></tr>
-    <tr><td>Age</td><td><input name='age' type ='text'></td></tr>
-    <tr><td>ID</td><td><input name='id' type ='text'></td></tr>
-    <tr><td><input value='Submit' type ='submit' ></td></tr></table></form>
+<style>
+.center {
+    padding: 70px 0;
     
+    text-align: center;
+}
+</style>
+<body style="background-image:url('BG-1.jpg')">
+ 
+<h1>Welcome,Login here</h1>
+<div class = 'center'>
+<form method = 'post' action = '/Login' name = "Myform" onsubmit = "return checkform()">
+<table align = "center">
+<tr><td>UserName</td><td><input type = "text" name = "uname"></td></tr>
+<tr><td>PassWord</td><td><input type = "Password" name = "pword"></td></tr>
+<tr><td><input type = "Submit" value = "Login"></td><td><a href = "/Register.html">New User?Sign Up</a></td></tr>
+</table>
+</form>
+</div>
+
+<script type = "text/javascript">
+function checkform(){
+	var x = document.forms["Myform"]["uname"].value;
+	if(x=='')
+		 alert("Name must be filled out");
+	
+	var y =document.forms["Myform"]["pword"].value;
+	if(y=='')
+		 alert("Password must be filled out");
+}
+
+
+</script>
 </body>
 </html>

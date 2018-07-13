@@ -18,6 +18,7 @@ public class HelloAppEngine extends HttpServlet {
 	 */
 	
 	boolean flag = false;
+	boolean result = false;
 	private static final long serialVersionUID = 1L;
 
 @Override
@@ -40,10 +41,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     String n = request.getParameter("user");
     String a = request.getParameter("age");
     String i = request.getParameter("id");
+    String p = request.getParameter("password");
     
     //Create or update entity
     try {
-		 flag=Entities.kindExample_writesEntity(n,a,i);
+		 flag=Entities.kindExample_writesEntity(n,a,i,p);
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -63,6 +65,20 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     
     //Retrieving an entity
    
+    
+    
+	
+	
+	
+	
+	
+	  //correct password
+	
+	//System.out.println("Username is :"+username+"Password is :"+password);
+	
+
+
+
 
     
   
